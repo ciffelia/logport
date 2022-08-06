@@ -23,6 +23,7 @@ jobs:
         run: |
           go mod tidy
           git diff --exit-code go.mod
+        working-directory: ./agent
 
   go-test:
     runs-on: ubuntu-20.04
