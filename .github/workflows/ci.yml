@@ -1,0 +1,54 @@
+name: CI
+
+on: [push, pull_request]
+
+permissions:
+  contents: read
+
+env:
+  GO_VERSION: 1.19
+
+jobs:
+  go-mod:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Check go.mod
+        run: |
+          go mod tidy
+          git diff --exit-code go.mod
+
+  go-test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run tests
+        run: go test -v
+        working-directory: ./agent
+
+  golangci-lint:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: ${{ env.GO_VERSION }}
+
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v3
+        with:
+          working-directory: ./agent
