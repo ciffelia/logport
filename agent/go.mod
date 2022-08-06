@@ -3,12 +3,12 @@ module github.com/ciffelia/logport/agent
 go 1.19
 
 require (
+	github.com/Microsoft/go-winio v0.5.2
 	github.com/docker/docker v20.10.17+incompatible
 	golang.org/x/text v0.3.3
 )
 
 require (
-	github.com/Microsoft/go-winio v0.5.2 // indirect
 	github.com/docker/distribution v2.8.1+incompatible // indirect
 	github.com/docker/go-connections v0.4.0 // indirect
 	github.com/docker/go-units v0.4.0 // indirect
