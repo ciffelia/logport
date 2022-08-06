@@ -3,6 +3,7 @@ package log
 import (
 	"bufio"
 	"context"
+	"github.com/ciffelia/logport/agent/docker/connection"
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"golang.org/x/text/transform"
@@ -60,7 +61,12 @@ func (c *Stream) Get() *Line {
 }
 
 func (c *Stream) Err() error {
-	return c.scanner.Err()
+	err := c.scanner.Err()
+	if connection.IsClosedError(err) {
+		return nil
+	} else {
+		return err
+	}
 }
 
 func (c *Stream) Close() error {

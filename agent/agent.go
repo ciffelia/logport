@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/Microsoft/go-winio"
 	"github.com/ciffelia/logport/agent/docker/log"
 	"github.com/docker/docker/client"
 	"time"
@@ -32,7 +31,7 @@ func main() {
 		fmt.Println(line.Timestamp, line.Payload)
 	}
 
-	if err := stream.Err(); err != nil && err != winio.ErrFileClosed {
+	if err := stream.Err(); err != nil {
 		panic(err)
 	}
 }
